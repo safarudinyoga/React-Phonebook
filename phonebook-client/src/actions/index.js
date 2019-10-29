@@ -1,3 +1,14 @@
+import {
+    LOAD_DATA_SUCCESS,
+    LOAD_DATA_FAILURE,
+    ADD_DATA,
+    ADD_DATA_SUCCESS,
+    ADD_DATA_FAILURE,
+    DELETE_DATA,
+    DELETE_DATA_SUCCESS,
+    DELETE_DATA_FAILURE
+} from "../constants/actiontype"
+
 import axios from 'axios'
 
 const API_URL = 'http://localhost:3001/api/'
@@ -8,12 +19,12 @@ const request = axios.create({
 });
 
 // start load itemlist data
-const loadDataSuccess = (data) => {
-    return { type: 'LOAD_DATA_SUCCESS', data }
+const loadDataSuccess = (todos) => {
+    return { type: LOAD_DATA_SUCCESS, todos }
 }
 
 const loadDataFailure = () => {
-    return {type: 'LOAD_DATA_FAILURE'}
+    return { type: LOAD_DATA_FAILURE }
 }
 
 export const LoadData = () => {
@@ -21,7 +32,7 @@ export const LoadData = () => {
         return request.get('phonebook')
             .then((response) => {
                 console.log(response);
-                dispatch(loadDataSuccess(response.data))
+                dispatch(loadDataSuccess(response.data.data))
             })
             .catch((error) => {
                 console.error(error);
@@ -30,4 +41,85 @@ export const LoadData = () => {
     }
 }
 
-// end load comment data
+// end load itemList data
+
+// start add data
+
+export const addDataSuccess = (todos) => ({
+    type: ADD_DATA_SUCCESS,
+    todos
+})
+
+export const addDataFailure = (id) => ({
+    type: ADD_DATA_FAILURE,
+    id
+})
+
+const addDataRedux = (id, name, phonenumber) => ({
+    type: ADD_DATA, id, name, phonenumber
+})
+
+export const addData = (name, phonenumber) => {
+    let id = Date.now();
+    return dispatch => {
+        dispatch(addDataRedux(id, name, phonenumber))
+        return request.post('phonebook', { id, name, phonenumber })
+            .then((response) => {
+                dispatch(addDataSuccess(response.data.itemAdded))
+            })
+            .catch((error) => {
+                console.error(error);
+                dispatch(addDataFailure(id))
+            });
+    }
+}
+
+// end add data
+
+// start delete data
+
+const deleteDataRedux = (id) => ({
+    type: DELETE_DATA, id
+})
+
+export const deleteDataSuccess = (todos) => ({
+    type: DELETE_DATA_SUCCESS,
+    todos
+})
+
+export const deleteDataFailure = () => ({
+    type: DELETE_DATA_FAILURE
+})
+
+export const deleteData = (id) => {
+    return dispatch => {
+        dispatch(deleteDataRedux(id))
+        return request.delete(`phonebook/${id}`)
+            .then((response) => {
+                dispatch(deleteDataSuccess(response.data.itemDeleted))
+            })
+            .catch((error) => {
+                console.error(error);
+                dispatch(deleteDataFailure())
+            });
+    }
+}
+
+// end delete data
+
+// Start Resend data
+
+// export const resendStore = (id, name, phone) => {
+//     return dispatch => {
+//         return axios.post('http://localhost:3001/api/phonebook', { id, name, phone })
+//             .then(response => {
+//                 dispatch(postDataSuccess(response.data))
+//             })
+//             .catch((err) => {
+//                 console.log(err);
+//                 dispatch(postDataFailure(id))
+//             })
+//     }
+// }
+
+// End resend data
