@@ -6,7 +6,11 @@ import {
     ADD_DATA_FAILURE,
     DELETE_DATA,
     DELETE_DATA_SUCCESS,
-    DELETE_DATA_FAILURE
+    DELETE_DATA_FAILURE,
+    SEARCH_DATA,
+    SEARCH_DATA_SUCCESS,
+    SEARCH_DATA_FAILURE,
+    SEARCH_DATA_RESET
 } from "../constants/actiontype"
 
 import axios from 'axios'
@@ -45,9 +49,8 @@ export const LoadData = () => {
 
 // start add data
 
-export const addDataSuccess = (todos) => ({
-    type: ADD_DATA_SUCCESS,
-    todos
+export const addDataSuccess = () => ({
+    type: ADD_DATA_SUCCESS
 })
 
 export const addDataFailure = (id) => ({
@@ -105,7 +108,20 @@ export const deleteData = (id) => {
     }
 }
 
-// end delete data
+// End delete data
+
+// Start Search data
+
+export const searchData = (value) => ({
+    type: SEARCH_DATA, 
+    value: value.trim()
+})
+
+export const searchDataReset = () => ({
+    type: SEARCH_DATA_RESET
+})
+
+// End Search data
 
 // Start Resend data
 
