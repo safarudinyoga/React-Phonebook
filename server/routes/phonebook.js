@@ -3,8 +3,9 @@ var router = express.Router();
 var Todo = require('../models/phonebook')
 
 /* GET users listing. */
+// adding sort todo in backend
 router.get('/', (req, res, next) => {
-    Todo.find({}).then(data => {
+    Todo.aggregate().collation({ locale: 'id' }).sort({ name: 'asc' }).exec().then(data => {
         res.json({
             status: 'Success',
             error: false,
@@ -17,7 +18,7 @@ router.get('/', (req, res, next) => {
             message: err
         })
     })
-})
+})    
 
 /* POST ADD USER. */
 router.post('/', (req, res, next) => {
