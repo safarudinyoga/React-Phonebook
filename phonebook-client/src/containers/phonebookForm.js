@@ -70,12 +70,12 @@ class PhonebookForm extends React.Component {
                                         <span className="input-group-text" id="basic-addon2"><i
                                             className="fas fa-phone"></i></span>
                                     </div>
-                                    <input type="number" className="form-control" value={this.state.phonenumber} onChange={this.handleChange} placeholder="Insert Phone Number" aria-describedby="basic-addon2" name="phonenumber" required={true} />
+                                    <input type="tel" className="form-control" value={this.state.phonenumber} onChange={this.handleChange} placeholder="Insert Phone Number" pattern={"^(08)[0-9]{9,11}$"} aria-describedby="basic-addon2" name="phonenumber" required={true} />
                                 </div>
                             </div>
                             <div className="form-group col-md-4">
                                 <button type="submit" className="btn btn-success mr-2"><i className="fas fa-check"></i> Save</button>
-                                <button type="button" onClick={this.handleButtonCancel} className="btn btn-info"> <i className="fas fa-undo"></i> Cancel</button>
+                                <button type="button" onClick={this.handleButtonCancel} className="btn btn-info"> <i className="fas fa-times"></i> Cancel</button>
                             </div>
                         </form>
                     </div>
