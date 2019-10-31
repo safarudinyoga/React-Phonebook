@@ -123,19 +123,13 @@ export const searchDataReset = () => ({
 
 // End Search data
 
-// Start Resend data
+// start resend add data
 
-// export const resendStore = (id, name, phone) => {
-//     return dispatch => {
-//         return axios.post('http://localhost:3001/api/phonebook', { id, name, phone })
-//             .then(response => {
-//                 dispatch(postDataSuccess(response.data))
-//             })
-//             .catch((err) => {
-//                 console.log(err);
-//                 dispatch(postDataFailure(id))
-//             })
-//     }
-// }
+export const resendData = (id, name, phonenumber) => {
+    return dispatch => {
+        dispatch(deleteDataRedux(id))
+        dispatch(addData(name, phonenumber))
+    }
+}
 
-// End resend data
+// end resend data
