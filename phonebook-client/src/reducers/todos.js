@@ -8,7 +8,12 @@ import {
     DELETE_DATA_SUCCESS,
     DELETE_DATA_FAILURE,
     SEARCH_DATA,
-    SEARCH_DATA_RESET
+    SEARCH_DATA_RESET,
+    EDIT_DATA,
+    EDIT_DATA_SUCCESS,
+    EDIT_DATA_FAILURE,
+    EDIT_ON,
+    EDIT_OFF
 } from "../constants/actiontype"
 
 // sort method in frontend
@@ -30,7 +35,8 @@ const todos = (state = [], action) => {
             return action.todos.map((data) => ({
                 ...data,
                 sent: true,
-                isVisible: true
+                isVisible: true,
+                onEdit: false
             })).sort(compare)
 
         case ADD_DATA:
@@ -41,7 +47,8 @@ const todos = (state = [], action) => {
                     name: action.name,
                     phonenumber: action.phonenumber,
                     sent: true,
-                    isVisible: true
+                    isVisible: true,
+                    onEdit: false
                 }
             ].sort(compare)
 
@@ -70,6 +77,49 @@ const todos = (state = [], action) => {
             return state.map(item => ({
                 ...item,
                 ...(item.id === action.id && {
+                    sent: false
+                })
+            }))
+
+        case EDIT_ON:
+            return state.map(item => ({
+                ...item,
+                ...(item.id === action.id && { onEdit: true })
+            })).sort(compare)
+
+        case EDIT_OFF:
+            return state.map(item => ({
+                ...item,
+                ...(item.id === action.id && { onEdit: false })
+            }))
+
+        case EDIT_DATA:
+            return state.map(item => ({
+                ...item,
+                ...(item.id === action.id && {
+                    onEdit: false,
+                    name: action.name,
+                    phonenumber: action.phonenumber,
+                    sent:true
+                })
+            })).sort(compare)
+
+        case EDIT_DATA_SUCCESS:
+            return state.map(item => ({
+                ...item,
+                ...(item.id === action.id && {
+                    onEdit: false,
+                    name: action.name,
+                    phonenumber: action.phonenumber,
+                    sent:true
+                })
+            })).sort(compare)
+
+        case EDIT_DATA_FAILURE:
+            return state.map(item => ({
+                ...item,
+                ...(item.id === action.id && {
+                    onEdit: false,
                     sent: false
                 })
             }))
