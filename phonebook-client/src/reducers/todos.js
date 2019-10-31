@@ -12,14 +12,14 @@ import {
 } from "../constants/actiontype"
 
 // sort method in frontend
-const compare = (a,b) => {
-    if ( a.name < b.name ){
+const compare = (a, b) => {
+    if (a.name < b.name) {
         return -1;
-      }
-      if ( a.name > b.name ){
+    }
+    if (a.name > b.name) {
         return 1;
-      }
-      return 0;
+    }
+    return 0;
 }
 
 const todos = (state = [], action) => {
@@ -44,7 +44,7 @@ const todos = (state = [], action) => {
                     isVisible: true
                 }
             ].sort(compare)
-        
+
         case ADD_DATA_SUCCESS:
             return state.map((data) => {
                 data.sent = true;
@@ -56,7 +56,7 @@ const todos = (state = [], action) => {
 
         case SEARCH_DATA:
             return state.map((item) => ({
-                ...item, 
+                ...item,
                 isVisible: (item.name.toLowerCase().includes(action.value) || item.phonenumber.includes(action.value))
             }))
 
@@ -65,10 +65,17 @@ const todos = (state = [], action) => {
                 ...item,
                 isVisible: true
             }))
-        
-        case DELETE_DATA_SUCCESS:
-        case DELETE_DATA_FAILURE:
+
         case ADD_DATA_FAILURE:
+            return state.map(item => ({
+                ...item,
+                ...(item.id === action.id && {
+                    sent: false
+                })
+            }))
+
+        case DELETE_DATA_FAILURE:
+        case DELETE_DATA_SUCCESS:
         case LOAD_DATA_FAILURE:
         default:
             return state
