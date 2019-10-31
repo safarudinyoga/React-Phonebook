@@ -66,7 +66,7 @@ router.put('/:id', (req, res, next) => {
         res.json({
             status: 'Success',
             error: false,
-            data
+            dataEdited: data
         })
     }).catch(err => {
         res.json({
@@ -76,27 +76,5 @@ router.put('/:id', (req, res, next) => {
         })
     })
 })
-
-/* GET USER FILTER. */
-// router.post('/search', (req, res, next) => {
-//     let filter = {};
-//     req.body.name ? filter.name = req.body.name : '';
-//     req.body.phonenumber ? filter.phonenumber = req.body.phonenumber : '';
-//     PhoneBook.find(filter)
-//     .then(data => {
-//         res.json({
-//             status: 'Success',
-//             error: false,
-//             data
-//         })
-//     }).catch(err => {
-//         res.json({
-//             status: 'Failed',
-//             error: true,
-//             message: err
-//         })
-//     })
-// })
-
 
 module.exports = router;
