@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
-import { deleteData } from '../actions';
+import { deleteData, resendData } from '../actions';
 import Item from '../components/item';
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onDelete: () => dispatch(deleteData(ownProps.id))
+    onDelete: () => dispatch(deleteData(ownProps.id)),
+    onResend: () => dispatch(resendData(ownProps.id, ownProps.name, ownProps.phonenumber))
 })
 
 export default connect (
