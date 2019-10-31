@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { deleteData, resendData } from '../actions';
+import { deleteData, resendData, editON } from '../actions';
 import Item from '../components/item';
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
