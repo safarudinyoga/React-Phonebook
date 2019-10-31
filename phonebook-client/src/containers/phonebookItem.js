@@ -2,6 +2,7 @@ import React from 'react';
 import Item from './itemActive';
 import { connect } from 'react-redux';
 import { LoadData } from '../actions';
+import PhonebookEditForm from './phonebookEditForm'
 
 class PhonebookItem extends React.Component {
     constructor() {
@@ -27,10 +28,9 @@ class PhonebookItem extends React.Component {
     render() {
         let list = this.props.data.map((item, index) => {
             return (
-                item.isVisible && <Item key={index} id={item.id} index={index + 1} name={item.name} status={item.status} phonenumber={item.phonenumber} sent={item.sent}/> )
+                item.isVisible && (item.onEdit ? <PhonebookEditForm key={index} id={item.id} index={index + 1} name={item.name} status={item.status} phonenumber={item.phonenumber} sent={item.sent}/>:<Item key={index} id={item.id} index={index + 1} name={item.name} status={item.status} phonenumber={item.phonenumber} sent={item.sent}/>)
+                )
         })
-
-        console.log(list)
 
         return (
             <div>
