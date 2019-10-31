@@ -44,7 +44,7 @@ class PhonebookForm extends React.Component {
         this.setState({
             name: '',
             phonenumber: '',
-            added: false
+            added: true
         })
     }
 
