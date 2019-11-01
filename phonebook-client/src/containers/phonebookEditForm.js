@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Item from './itemActive';
 import { editData, editOFF } from '../actions';
 
 class PhonebookEditForm extends React.Component {
@@ -32,21 +31,15 @@ class PhonebookEditForm extends React.Component {
     }
 
     handleNumberChange(event) {
-            this.setState({
-                phonenumber: event.target.value,
-                isValid: true
-            })
-        // } else {
-        //     this.setState({
-        //         phonenumber: event.target.value,
-        //         isValid: false
-        //     })
-        // }
+        this.setState({
+            phonenumber: event.target.value,
+            isValid: true
+        })
     }
 
-    handleSubmit(event){
+    handleSubmit(event) {
         event.preventDefault()
-        if (this.state.name === this.props.name && this.state.phonenumber === this.props.phonenumber){
+        if (this.state.name === this.props.name && this.state.phonenumber === this.props.phonenumber) {
             this.props.onCancel()
         } else if (!this.state.isValid) {
             this.props.onCancel()
@@ -55,10 +48,10 @@ class PhonebookEditForm extends React.Component {
         }
     }
 
-    render(){
+    render() {
         return (
             <tr>
-                <td scope="row">{this.props.index}</td>
+                <th scope="row">{this.props.index}</th>
                 <td>
                     <form className="form-row" onSubmit={this.handleSubmit}>
                         <div className="col-8">
@@ -85,7 +78,7 @@ class PhonebookEditForm extends React.Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onCancel: () => dispatch(editOFF(ownProps.id)),
-    onSave: (name,phonenumber) => {
+    onSave: (name, phonenumber) => {
         dispatch(editData(ownProps.id, name, phonenumber))
         dispatch(editOFF(ownProps.id))
     }
