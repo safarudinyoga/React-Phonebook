@@ -127,40 +127,26 @@ export const deleteData = (id) => {
                     dispatch(deleteDataSuccess(response.data.itemDeleted))
                 })
             } else {
-                return request.delete(`phonebook/${id}`).then((response) => {
-                    dispatch(deleteDataFailure())
+                    return request.get('phonebook').then(response => {
                     Swal.fire({
                         title: 'Cancelled',
-                        text: `Contact ${response.data.itemDeleted.name} is Forgiven!`,
+                        text: `Contact is Forgiven!`,
                         type: 'error',
                         timer: 1500
                     })
+                    dispatch(deleteDataFailure())
                 })
             }
         })
     }
 }
 
-// export const deleteData = (id) => {
-//     return dispatch => {
-//         dispatch(deleteDataRedux(id))
-//         return request.delete(`phonebook/${id}`)
-//             .then((response) => {
-//                 dispatch(deleteDataSuccess(response.data.itemDeleted))
-//             })
-//             .catch((error) => {
-//                 console.error(error);
-//                 dispatch(deleteDataFailure())
-//             });
-//     }
-// }
-
 // End delete data
 
 // Start Search data
 
 export const searchData = (value) => ({
-    type: SEARCH_DATA, 
+    type: SEARCH_DATA,
     value: value.trim()
 })
 
@@ -185,7 +171,7 @@ export const resendData = (id, name, phonenumber) => {
 
 const editDataSuccess = (todos) => ({
     type: EDIT_DATA_SUCCESS,
-    todos 
+    todos
 })
 
 const editDataFailure = (id, name, phonenumber) => ({
@@ -206,25 +192,31 @@ export const editOFF = (id) => ({
 
 export const editData = (id, name, phonenumber) => {
     return dispatch => {
-        dispatch(editDataRedux(id,name,phonenumber))
-        return request.put(`phonebook/${id}`, {name, phonenumber})
-        .then(response => {
-            dispatch(editDataSuccess(response.data.dataEdited))
-        }).catch(error => {
-            console.log(error);
-            dispatch(editDataFailure(id, name, phonenumber))
-        })
+        dispatch(editDataRedux(id, name, phonenumber))
+        return request.put(`phonebook/${id}`, { name, phonenumber })
+            .then(response => {
+                Swal.fire({
+                    type: 'success',
+                    title: `Contact ${response.data.dataEdited.name} Edited`,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                dispatch(editDataSuccess(response.data.dataEdited))
+            }).catch(error => {
+                console.log(error);
+                dispatch(editDataFailure(id, name, phonenumber))
+            })
     }
 }
 
 export const resendEditData = (id, name, phonenumber) => {
     return dispatch => {
-        return request.put(`phonebook/${id}`, {name, phonenumber})
-        .then(response => {
-            dispatch(editDataSuccess(response.data.dataEdited))
-        }).catch(error => {
-            console.log(error);
-            dispatch(editDataFailure(id))
-        })
+        return request.put(`phonebook/${id}`, { name, phonenumber })
+            .then(response => {
+                dispatch(editDataSuccess(response.data.dataEdited))
+            }).catch(error => {
+                console.log(error);
+                dispatch(editDataFailure(id))
+            })
     }
 }
